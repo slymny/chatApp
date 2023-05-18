@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  error:
+    path: /error
+spring:
+  application:
+    name: "Chat application for Bunq"
+  datasource:
+    driver-class-name: org.sqlite.JDBC
+    url: jdbc:sqlite:chatapp.db
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+
+
