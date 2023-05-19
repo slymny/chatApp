@@ -2,7 +2,9 @@ package com.bunq.chatApp.entities;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 
@@ -10,24 +12,27 @@ import java.time.LocalDateTime;
 @Table(name = "messages")
 @Getter
 @Setter
+@NoArgsConstructor
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "group_id")
     private Group group;
 
     @ManyToOne
-    private User user;
+    private User sender;
 
     private String text;
 
     private LocalDateTime createdAt;
 
-    public Message(Group group, User user, String text) {
+    @Autowired
+    public Message(Group group, User sender, String text) {
         this.group = group;
-        this.user = user;
+        this.sender = sender;
         this.text = text;
         this.createdAt = LocalDateTime.now();
     }
