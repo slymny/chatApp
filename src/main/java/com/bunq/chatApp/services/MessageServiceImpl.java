@@ -3,14 +3,13 @@ package com.bunq.chatApp.services;
 import com.bunq.chatApp.entities.Group;
 import com.bunq.chatApp.entities.Message;
 import com.bunq.chatApp.entities.User;
+import com.bunq.chatApp.exception.NotFoundException;
 import com.bunq.chatApp.repositories.GroupRepository;
 import com.bunq.chatApp.repositories.MessageRepository;
 import com.bunq.chatApp.repositories.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,11 +22,16 @@ public class MessageServiceImpl implements MessageService {
     private UserRepository userRepository;
 
     @Override
-    public void addMessage(Long groupId, String username, String text) {
-        Group group = groupRepository.findById(groupId).orElseThrow();
+    public Message addMessage(Long groupId, String username, String text) throws NotFoundException {
+        Group group = groupRepository.findById(groupId).orElseThrow(() -> new NotFoundException("Grup is not found!"));
         User user = userRepository.findByUsername(username);
+        if(user == null)
+            throw new NotFoundException("User is not found!");
+        if(!group.getUsers().contains(user))
+            throw new IllegalArgumentException("User is not a member of the group!");
         Message message = new Message(group, user, text);
         messageRepository.save(message);
+        return message;
     }
 
     @Override
