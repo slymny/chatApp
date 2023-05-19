@@ -21,16 +21,22 @@ public class Group {
 
     private String name;
 
+    @ManyToOne
+    private User creator;
+
     @ManyToMany
     private Set<User> users;
 
     private LocalDateTime createdAt;
 
-    public Group(String name, Set<User> users) {
+    public Group(String name, Set<User> users, User creator) {
         this.name = name;
         this.users = users;
         this.createdAt = LocalDateTime.now();
+        this.creator = creator;
     }
+
+
 }
 
 
