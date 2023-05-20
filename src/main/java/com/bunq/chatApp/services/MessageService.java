@@ -6,7 +6,7 @@ import com.bunq.chatApp.exception.NotFoundException;
 import java.util.List;
 
 public interface MessageService {
-    Message addMessage(Long groupId, String username, String text) throws NotFoundException;
+    Message addMessage(Long groupId, String username, String message) throws NotFoundException;
     List<Message> getAllMessages(Long groupId);
 }
 

@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class MessageRequest {
-    private String username;
-    private String message;
+    private String sender;
+    private String text;
 }

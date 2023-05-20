@@ -79,7 +79,7 @@ public class ChatController extends BaseController {
 
     @PostMapping("/groups/{groupId}/messages")
     public ResponseEntity<MessageResponse> addMessage(@PathVariable Long groupId, @RequestBody MessageRequest message) throws NotFoundException {
-        MessageResponse messageResponse = map(messageService.addMessage(groupId, message.getUsername(), message.getMessage()), MessageResponse.class);
+        MessageResponse messageResponse = map(messageService.addMessage(groupId, message.getSender(), message.getText()), MessageResponse.class);
         return ResponseEntity.ok(messageResponse);
     }
 
